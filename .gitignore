@@ -1,0 +1,12 @@
+# Python environment and transient files
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local databases and logs
+contractors_vetting.db
+*.log
+
+# Sensitive env configuration
+.env

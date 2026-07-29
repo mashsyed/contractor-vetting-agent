@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Vetting Multi-Agent Platform</title>
+    <!-- Google Fonts for premium modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="main-header">
+            <div class="logo-area">
+                <span class="logo-shield">🛡️</span>
+                <div class="brand-text">
+                    <h1>ShieldGuard AI</h1>
+                    <p class="subtitle">Multi-Agent Contractor Vetting Platform</p>
+                </div>
+            </div>
+            <div class="header-badge">
+                <span class="pulse-indicator"></span>
+                <span>Google ADK Active Loop</span>
+            </div>
+        </header>
+
+        <!-- Dashboard Layout -->
+        <main class="dashboard-grid">
+            
+            <!-- SECTION 1: Contractor Hub Grid -->
+            <section class="contractor-hub-panel">
+                <div class="section-title-bar">
+                    <h2>📋 Contractor Registry Hub</h2>
+                    <p class="section-desc">Select a contractor from the state registry to perform a multi-agent deep vetting audit.</p>
+                </div>
+                <div id="contractor-cards-container" class="cards-grid">
+                    <!-- Loaded dynamically via JS -->
+                    <div class="loading-cards-state">
+                        <div class="card-skeleton"></div>
+                        <div class="card-skeleton"></div>
+                        <div class="card-skeleton"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Split Live Console / Results View -->
+            <section class="split-live-console">
+                
+                <!-- COLUMN A: Multi-Agent Stream Container -->
+                <div class="stream-container glass-panel">
+                    <div class="panel-header">
+                        <h3>🤖 Live Multi-Agent Collaboration Stream</h3>
+                        <div class="stream-status" id="stream-status-badge">Idle</div>
+                    </div>
+                    
+                    <div class="active-progress-bar-container" id="progress-bar-wrap">
+                        <div class="active-progress-bar" id="active-loader-bar"></div>
+                    </div>
+                    
+                    <div class="chat-terminal" id="agent-chat-terminal">
+                        <div class="system-welcome-message">
+                            <p class="icon">💬</p>
+                            <h4>Ready for Vetting</h4>
+                            <p>Select any contractor above to initiate real-time multi-agent credential verifications, price audit compliance, and risk calculations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN B: Synthesized Decision Card & Interview Guide -->
+                <div class="results-container glass-panel">
+                    <div class="panel-header">
+                        <h3>🏆 Vetting Audit Decision Card</h3>
+                        <span class="report-badge">Output Report</span>
+                    </div>
+
+                    <div class="results-viewport" id="results-viewport-container">
+                        <!-- Welcome / Placeholder State -->
+                        <div class="results-placeholder">
+                            <span class="placeholder-icon">📄</span>
+                            <h4>Decision Card & Strategic Script</h4>
+                            <p>When the multi-agent orchestration completes, the synthesized Decision Card, Letter Grade, and Customized Homeowner Coaching Guide will render here.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Inject Markdown Parser Library for premium formatted results -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>
