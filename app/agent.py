@@ -25,7 +25,14 @@ from google.adk.models import Gemini
 from google.genai import types
 from google.genai import Client
 
-from app.vetting_tools import audit_estimate, verify_credentials, calculate_trust_score, list_contractors_by_project_type
+from app.vetting_tools import (
+    audit_estimate, 
+    verify_credentials, 
+    calculate_trust_score, 
+    list_contractors_by_project_type,
+    request_human_approval,
+    evaluate_security_policy
+)
 
 # Set GCP location and auth environment variables for standard Vertex AI usage
 os.environ["GOOGLE_CLOUD_LOCATION"] = os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
@@ -159,7 +166,7 @@ trust_decisioning_agent = Agent(
         "CRITICAL EXPERIENCE RULE:\n"
         "Every time you invoke a tool, output a descriptive sentence in real-time explaining what you are doing (e.g. 'I am now calculating the overall vetting GPA and checking for auto-disqualification parameters...')."
     ),
-    tools=[calculate_trust_score],
+    tools=[calculate_trust_score, request_human_approval],
 )
 
 # -------------------------------------------------------------
@@ -189,7 +196,7 @@ coordinator_agent = Agent(
         "   - A tailored Homeowner Coaching Interview Guide."
     ),
     sub_agents=[quote_auditor_agent, license_verifier_agent, interview_coach_agent, trust_decisioning_agent],
-    tools=[list_contractors_by_project_type]
+    tools=[list_contractors_by_project_type, evaluate_security_policy]
 )
 
 # Top-level ADK App Container

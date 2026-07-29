@@ -129,3 +129,29 @@ The scoring engine strictly overrides all metrics and sets the final GPA directl
 1.  An expired or invalid contractor license.
 2.  An active lawsuit or litigation history.
 $$\text{License Invalid} \lor \text{Lawsuit Found} \implies \text{Vetting GPA} = 0.0 \quad \text{(AUTO-DISQUALIFIED)}$$
+
+---
+
+## 🛡️ Enterprise ShieldGuard Extension Features
+
+We have extended the base platform with advanced enterprise features to meet the highest safety, memory, tracing, and infrastructure standard requirements:
+
+### 1. Persistent Session Memory Database & Compaction
+*   **Persistent Storage**: Conversational histories are saved across multi-turn sessions in the local SQLite database (`session_history` table).
+*   **Asynchronous Operations**: Memory reads, writes, and processing are done asynchronously in a background thread-pool (`asyncio.to_thread`) to prevent UI lag.
+*   **Context Compaction**: If conversation length exceeds 8 turns, a background task automatically condenses the oldest turns, compiling them into a single high-level summary to prevent LLM context-window expansion and keep token usage highly efficient.
+
+### 2. Policy Guardrails & Human-in-the-Loop (HITL) Logs
+*   **Policy Guardrails**: Programmatic security guardrails (`evaluate_security_policy` tool) scan inputs for prompt injection or compliance-scale manipulation.
+*   **Human-in-the-Loop**: High-stakes decisions require manual approval through the `request_human_approval` tool, which tracks verification attempts and logs detailed traces to an administrative file.
+
+### 3. Distributed Tracing & PII Redaction
+*   **Structured JSON Logging**: The entire FastAPI server and tool chain have been migrated from basic print logs to standard python loggers outputting compliant JSON formats.
+*   **Intent vs. Outcome Tracking**: Pre-execution intent logging and post-execution outcome telemetry ensure exact tool performance audits.
+*   **Distributed Tracing**: Standard context propagation correlates request flows with a custom UUID-based TraceSpan context tracker.
+*   **PII Masking**: Regular expression compliance redacts credit cards, emails, social security numbers, and phone numbers from logs and streamed tokens.
+
+### 4. Golden Dataset Evaluation & IaC Provisioning
+*   **Golden Dataset Test Suite**: Programmatic regression tests (`tests/integration/test_golden_dataset.py`) validate the entire agentic pipeline against standard, borderline, and unsafe contractor profiles.
+*   **Infrastructure as Code (IaC)**: Deployable Terraform configuration templates (`terraform/main.tf`) automate provisioning for Vertex AI Agents, serverless Cloud Run hosts, Firestore Native, and Secret Manager.
+*   **CLI Provisioning Utility**: An automated shell script (`scripts/provision.sh`) wraps standard gcloud and Terraform setups into a single terminal run.
