@@ -79,9 +79,14 @@ class GlobalGemini(Gemini):
             kwargs['project'] = project
         return Client(**kwargs)
 
-# Common Model Configuration
-gemini_model = GlobalGemini(
+# Common Model Configurations for Strategic Routing
+gemini_flash = GlobalGemini(
     model="gemini-3.5-flash",
+    retry_options=types.HttpRetryOptions(attempts=3),
+)
+
+gemini_pro = GlobalGemini(
+    model="gemini-2.5-pro",
     retry_options=types.HttpRetryOptions(attempts=3),
 )
 
@@ -90,7 +95,7 @@ gemini_model = GlobalGemini(
 # -------------------------------------------------------------
 quote_auditor_agent = Agent(
     name="quote_auditor_agent",
-    model=gemini_model,
+    model=gemini_flash,
     instruction=(
         "You are the Quote & Estimate Auditor Agent.\n"
         "Your role is to analyze a contractor's cost estimates against market rates and evaluate the scope of work.\n"
@@ -109,7 +114,7 @@ quote_auditor_agent = Agent(
 # -------------------------------------------------------------
 license_verifier_agent = Agent(
     name="license_verifier_agent",
-    model=gemini_model,
+    model=gemini_flash,
     instruction=(
         "You are the Credentials & License Verifier Agent.\n"
         "Your role is to check the legal standing, professional licensing, and insurance of the contractor.\n"
@@ -128,7 +133,7 @@ license_verifier_agent = Agent(
 # -------------------------------------------------------------
 interview_coach_agent = Agent(
     name="interview_coach_agent",
-    model=gemini_model,
+    model=gemini_flash,
     instruction=(
         "You are the Homeowner Interview Coach Agent.\n"
         "Your role is to review the contractor's audit findings and construct a customized interview script for the homeowner.\n"
@@ -143,7 +148,7 @@ interview_coach_agent = Agent(
 # -------------------------------------------------------------
 trust_decisioning_agent = Agent(
     name="trust_decisioning_agent",
-    model=gemini_model,
+    model=gemini_pro,
     instruction=(
         "You are the Trust & Decisioning Agent.\n"
         "Your role is to compile all vetting outputs, run calculations, and formulate the final Decision Card.\n"
@@ -162,7 +167,7 @@ trust_decisioning_agent = Agent(
 # -------------------------------------------------------------
 coordinator_agent = Agent(
     name="contractor_vetting_coordinator",
-    model=gemini_model,
+    model=gemini_flash,
     instruction=(
         "You are the Lead Contractor Vetting Coordinator Agent.\n"
         "Your goal is to guide homeowners through a comprehensive multi-agent vetting of residential contractors.\n"
